@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/pagination.css" />
+    <script type="text/javascript" src="./js/jquery-3.4.0.min.js"></script>
+    <script src="./js/pagination.min.js"></script>
+</head>
+
+<body>
+    <div id="wrapper" style="margin: 20px;">
+        <section>
+            <div id="data-container"></div>
+            <div id="pagination"></div>
+        </section>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $("#pagination").pagination({
+        pageSize: 10,
+        totalNumber: 921,
+        alias: {
+            pageNumber: "page",
+            pageSize: "size"
+        },
+        dataSource: "https://api.instantwebtools.net/v1/passenger?",
+        locator: "data", 
+        callback: function (data, pagination) {
+            console.log(data);
+            var html = "";
+            $.each(data, function (index, item) {
+                html = html + "<p>" + item.name + "</p>";
+            });
+            $("#data-container").html(html);
+        }
+    })
+</script>
