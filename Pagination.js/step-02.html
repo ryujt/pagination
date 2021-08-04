@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pagination example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+</head>
+
+<body>
+    <div id="wrapper">
+        <section>
+            <div id="data-container"></div>
+            <div id="pagination"></div>
+        </section>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $("#pagination").pagination({
+        alias: {
+            pageNumber: "page",
+            pageSize: "size"
+        },
+        pageSize: 5,        
+        dataSource: function (done) {
+            $.ajax({
+                type: "GET",
+                url: "https://api.instantwebtools.net/v1/passenger",
+                success: function (response) {
+                    done(response.data);
+                }
+            });
+        },
+        callback: function (data, pagination) {
+            console.log(data);
+            var html = "";
+            $.each(data, function (index, item) {
+                html = html + "<p>" + item.name + "</p>";
+            });
+            $("#data-container").html(html);
+        }
+    })
+</script>
